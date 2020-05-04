@@ -17,7 +17,7 @@ server.get('/', (req, res) =>{
 })
 
 server.get('/api/users', (req, res) => {
-    if(!user){
+    if(!users){
         res.status(400).json({Error:'There was an error trying to get the data.'});
     }
     else{
@@ -29,8 +29,12 @@ server.get('/api/users/:id', (req, res) => {
     const id = req.params.id;
 
     let certainUser = users.filter(person => person.id === id);
-
-    res.status(200).json(certainUser);
+    if(!certainUser){
+        res.status(400).json({Error:'There was an error trying to get the data.'});
+    }
+    else{
+        res.status(201).json(certainUser);
+    }
 })
 
 server.post('/api/users', (req, res) => {
@@ -53,15 +57,31 @@ server.post('/api/users', (req, res) => {
 server.delete('/api/users/:id', (req, res) => {
     let id = req.params.id;
 
-    users = users.filter(person => person.id != id);
+    let checkId = users.filter(check => check.id === id);
+    console.log("Checkid: ", checkId)
 
-    res.status(200).json(users);
+    users = users.filter(person => person.id != id);
+    if(checkId.length === 0){
+        res.status(400).json({Error:'The Id was not found in the Data'});
+    }
+    else if(!users){
+        res.status(500).json({Error:'There was an error trying to get the data.'});
+    }
+    else{
+        res.status(201).json(users);
+    }
 })
 
 server.patch('/api/user/:id', (req, res) => {
     const id = Number(req.params.id);
 
-    res.status(200).json(users);
+
+    if(!users){
+        res.status(400).json({Error:'There was an error trying to get the data.'});
+    }
+    else{
+        res.status(201).json(users);
+    }
 })
 
 server.listen(5000, () => console.log('API is Running!'));
