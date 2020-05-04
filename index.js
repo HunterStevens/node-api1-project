@@ -6,9 +6,29 @@ server.use(express.json());
 
 let users = [
     {
-        id:shortid.generate(),
-        name: 'John Dale',
-        bio: 'Simple Farmer'
+        id: shortid.generate(),
+        name: "John Dale",
+        bio: "Simple Farmer"
+    },
+    {
+        name: "George Clean",
+        bio: "AKA Mr. Clean",
+        id: shortid.generate()
+    },
+    {
+        name: "Betty Crocker",
+        bio: "can bake some mad cookies",
+        id: shortid.generate()
+    },
+    {
+        name: "Danny Phantom",
+        bio: "obsessed with ghosts",
+        id: shortid.generate()
+    },
+    {
+        name: "Simon Simon",
+        bio: "Named after his father",
+        id: shortid.generate()
     }
 ]
 
