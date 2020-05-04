@@ -17,8 +17,12 @@ server.get('/', (req, res) =>{
 })
 
 server.get('/api/users', (req, res) => {
-
-    res.json(users);
+    if(!user){
+        res.status(400).json({Error:'There was an error trying to get the data.'});
+    }
+    else{
+        res.status(201).json(users);
+    }
 })
 
 server.get('/api/users/:id', (req, res) => {
