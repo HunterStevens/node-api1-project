@@ -22,7 +22,7 @@ server.get('/api/users', (req, res) => {
 })
 
 server.get('/api/users/:id', (req, res) => {
-    const id = Number(req.params.id);
+    const id = req.params.id;
 
     let certainUser = users.filter(person => person.id === id);
 
