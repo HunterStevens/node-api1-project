@@ -83,14 +83,15 @@ server.delete('/api/users/:id', (req, res) => {
     let checkId = users.filter(check => check.id === id);
     console.log("Checkid: ", checkId)
 
-    users = users.filter(person => person.id != id);
+  
     if(checkId.length === 0){
         res.status(404).json({Error:'The Id was not found in the Data'});
     }
     else if(!users){
         res.status(500).json({Error:'There was an error trying to get the data.'});
     }
-    else{
+    else{  
+        users = users.filter(person => person.id != id);
         res.status(201).json(users);
     }
 })
@@ -103,7 +104,7 @@ server.patch('/api/users/:id', (req, res) => {
         res.status(404).json({Error:'The Id was not found in the Data'});
     }
 
-    else if (!userInfo.name || !userInfo.bio){
+    else if (!userInfo.name || !userInfo.bio || userInfo.name === null || userInfo.bio === null || userInfo.name === "" || userInfo.bio === ""){
         res.status(404).json({Error:'Please Provide Name and Bio for the user to update'})
     }  
   
