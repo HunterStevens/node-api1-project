@@ -1,6 +1,9 @@
+require('dotenv').config();
+const restricted = require('./auth/restricted-middleware');
 const express = require('express');
 const shortid = require('shortid');
 const server = express();
+const port = process.env.PORT || 5000;
 
 server.use(express.json());
 
@@ -45,7 +48,7 @@ server.get('/api/users', (req, res) => {
     }
 })
 
-server.get('/api/users/:id', (req, res) => {
+server.get('/api/users/:id', restricted, (req, res) => {
     const id = req.params.id;
 
     let certainUser = users.filter(person => person.id === id);
@@ -60,7 +63,7 @@ server.get('/api/users/:id', (req, res) => {
     }
 })
 
-server.post('/api/users', (req, res) => {
+server.post('/api/users', restricted, (req, res) => {
     let userInfo = req.body;
     userInfo.id = shortid.generate();
 
@@ -77,7 +80,7 @@ server.post('/api/users', (req, res) => {
     }
 })
 
-server.delete('/api/users/:id', (req, res) => {
+server.delete('/api/users/:id', restricted, (req, res) => {
     let id = req.params.id;
 
     let checkId = users.filter(check => check.id === id);
@@ -96,7 +99,7 @@ server.delete('/api/users/:id', (req, res) => {
     }
 })
 
-server.patch('/api/users/:id', (req, res) => {
+server.patch('/api/users/:id', restricted, (req, res) => {
     const id = req.params.id;
     let userInfo = req.body;
     let checkId = users.filter(check => check.id === id);
@@ -126,4 +129,4 @@ server.patch('/api/users/:id', (req, res) => {
     }
 })
 
-server.listen(5000, () => console.log('API is Running!'));
+server.listen(port, () => console.log('API is Running!'));
